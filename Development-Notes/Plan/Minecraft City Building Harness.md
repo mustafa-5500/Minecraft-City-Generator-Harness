@@ -1,0 +1,8 @@
+**Motivation:** In order to make a building classification model and later on, a building semantic segmentation model, a building "score" classifier, we will need a large dataset of example buildings. The best example buildings would be real player buildings in an active public server, however it will be labour and time intensive to collect 10s of thousands of such examples, and distributing the examples across the various classes of buildings.
+
+**Idea:** Make use of VLLM such as Deepseek V4.1-Flash to design individual buildings, and incrementally create cities. The VLLM will be able to see the building from multiple view angles, and given natural language descriptions of the design, which the harness should then convert into commands which change the block data.
+
+**Tools:** To reduce the amount of decision making relegated to the VLLM, we will use some tools to get top down maps of locations in a minecraft world, then use convolution filters to find edges, such as biome, block change, height change, edges. following the intuition that realistic settlements favour these edges. From such edges we can "score" locations for settlements. Then Have another tool which starts to plan our roads and plots for the settlement, initial roads might follow the environment edges, with varying shaped and sized plots along it. The roads then having a proportional (based on distance from the last intersection) probability of creating an intersection. The harness will only need to build the plots and not decides roads, size of the plots, or location of the city.
+- Map generator
+- Location finder/scorer
+- Layout generator
